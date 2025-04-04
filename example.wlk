@@ -1,4 +1,27 @@
+object mensajeria{
 
+	var cliente = george
+	var mensajero = lincolnHawk
+	var destino = matrix
+
+	method cliente() = cliente
+	method cliente(_cliente) { cliente = _cliente}
+	method mensajero() = mensajero
+	method mensajero(_mensajero){ mensajero = _mensajero}
+	method destino() = destino
+	method destino(_destino) {destino = _destino}
+
+
+
+    method puedeSerLlevado(){
+		if (destino.puedePasar(mensajero)){
+			return "El paquete de " + cliente.nombre() + " puede ser llevado por " + mensajero.nombre() + " a " + destino.nombre()
+		}
+		else
+			return "El paquete de " + cliente.nombre() + " no puede ser llevado por " + mensajero.nombre() + " a " + destino.nombre()
+	}
+
+}
 object albumFiguritas{
 
 	const valorPaquete = 10
@@ -8,16 +31,21 @@ object albumFiguritas{
 	method pago(_pago){ pago = _pago}
 
 	method estaPago(){
-		return pago >= valorPaquete
+		if (pago >= valorPaquete){ 
+			return "está pago"} 
+		else 
+			return "no está pago"
 	}
 
 }
 
 object george{
 
+
 	var paquete = albumFiguritas
 	var saldo = 10
 
+	method nombre() = "george"
 	method saldo() = saldo
 	method saldo(_saldo){saldo = _saldo}
 
@@ -30,12 +58,15 @@ object george{
 		paquete.pago(self.saldo())
 		self.saldo(0)
 	}
+
 }
 
 object chuckNorris{
 
 	const peso = 900
 	
+	method nombre() = "Chuck"
+
 	method peso(){
 		return peso
 	}
@@ -48,7 +79,8 @@ object neo{
 
 	var credito = 50
 	const peso = 0
-
+	
+	method nombre() = "Neo"
 
 	method peso(){
 		return peso
@@ -75,6 +107,8 @@ object lincolnHawk{
 	var hora = 9
 	var transporte = camion
 	
+	method nombre() = "Lincoln"
+
 	method transporte() = transporte
 	method transporte(_transporte) { transporte = _transporte}
 	
@@ -121,12 +155,15 @@ object camion{
 }
 
 object brooklyn{
+
+	method nombre() = "Brooklyn"
 	method puedePasar(mensajero){
 		return mensajero.peso() < 1001
 	}
 }
 
 object matrix{
+	method nombre() = "la matrix"
 	method puedePasar(mensajero){
 		return mensajero.llamar()
 	}
