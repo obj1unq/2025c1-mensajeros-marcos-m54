@@ -1,13 +1,6 @@
 object mensajeria {
-	var cliente = george
-	var mensajero = lincolnHawk
+	var mensajero = neo
 	var destino = matrix
-	
-	method cliente() = cliente
-	
-	method cliente(_cliente) {
-		cliente = _cliente
-	}
 	
 	method mensajero() = mensajero
 	
@@ -21,62 +14,21 @@ object mensajeria {
 		destino = _destino
 	}
 	
-	method puedeSerLlevado() {
-		if (destino.puedePasar(mensajero)) {
-			return (((("El paquete de " + cliente.nombre()) + " puede ser llevado por ") + mensajero.nombre()) + " a ") + destino.nombre()
-		} else {
-			return (((("El paquete de " + cliente.nombre()) + " no puede ser llevado por ") + mensajero.nombre()) + " a ") + destino.nombre()
-		}
-	}
+	method puedeSerLlevado() = paquete.pago() && destino.puedePasar(mensajero)
 }
 
-object albumFiguritas {
-	const valorPaquete = 10
-	var pago = 0
+object paquete {
+	var pago = true
 	
 	method pago() = pago
 	
 	method pago(_pago) {
 		pago = _pago
 	}
-	
-	method estaPago() {
-		if (pago >= valorPaquete) {
-			return "está pago"
-		} else {
-			return "no está pago"
-		}
-	}
-}
-
-object george {
-	var paquete = albumFiguritas
-	var saldo = 10
-	
-	method nombre() = "george"
-	
-	method saldo() = saldo
-	
-	method saldo(_saldo) {
-		saldo = _saldo
-	}
-	
-	method paquete() = paquete
-	
-	method paquete(_paquete) {
-		paquete = _paquete
-	}
-	
-	method pagarPaquete() {
-		paquete.pago(self.saldo())
-		self.saldo(0)
-	}
 }
 
 object chuckNorris {
 	const peso = 900
-	
-	method nombre() = "Chuck"
 	
 	method peso() = peso
 	
@@ -86,8 +38,6 @@ object chuckNorris {
 object neo {
 	var credito = 50
 	const peso = 0
-	
-	method nombre() = "Neo"
 	
 	method peso() = peso
 	
@@ -101,33 +51,20 @@ object neo {
 }
 
 object lincolnHawk {
-	var pesoBase = 10
-	var hora = 9
+	var peso = 10
 	var transporte = camion
 	
-	method nombre() = "Lincoln"
+	method peso() = peso + transporte.peso()
+	
+	method peso(_peso) {
+		peso = _peso
+	}
 	
 	method transporte() = transporte
 	
 	method transporte(_transporte) {
 		transporte = _transporte
 	}
-	
-	method hora() = hora
-	
-	method hora(_hora) {
-		hora = _hora
-	}
-	
-	method pesoBase() = pesoBase
-	
-	method pesoBase(_pesoBase) {
-		pesoBase = _pesoBase
-	}
-	
-	method peso() = pesoBase * hora
-	
-	method pesoLinconl() = (pesoBase * hora) + transporte.peso()
 	
 	method llamar() = false
 }
@@ -137,33 +74,23 @@ object bici {
 }
 
 object camion {
-	var acoplado = 500
+	var cantAcoplados = 2
+	const pesoBase = 500
+	const pesoAcoplado = 500
 	
-	method peso() = 10000 + acoplado
+	method peso() = pesoBase + (cantAcoplados * pesoAcoplado)
 	
-	method acoplado() = acoplado
+	method cantAcoplados() = cantAcoplados
 	
-	method acoplado(_acoplado) {
-		acoplado = _acoplado
-	}
-	
-	method quitarAcoplado() {
-		self.acoplado(0)
-	}
-	
-	method agregarAcoplado() {
-		self.acoplado(500)
+	method cantAcoplados(_cantAcoplados) {
+		cantAcoplados = _cantAcoplados
 	}
 }
 
 object brooklyn {
-	method nombre() = "Brooklyn"
-	
 	method puedePasar(mensajero) = mensajero.peso() < 1001
 }
 
 object matrix {
-	method nombre() = "la matrix"
-	
 	method puedePasar(mensajero) = mensajero.llamar()
 }
